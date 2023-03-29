@@ -36,6 +36,7 @@ const topics = [
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       main: '#009bd7'
     }
