@@ -6,8 +6,6 @@ const Planet:FC<{width: number, height: number}>  = (props) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log("sdsd");
-    
     if (mountRef.current) {
       var scene = new THREE.Scene();
       var camera = new THREE.PerspectiveCamera(75, props.width / props.height, 0.1, 1000);
