@@ -39,6 +39,7 @@ const topics = [
   { title: 'Atmospheric scattering', description: 'Earth atmosphere scatters the incoming sunlight. ', to: '/cg/atmospheric-scattering', img: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Pinatubo_dust_layer.jpg', tags: ["planned", "complex"] },
   { title: 'Flow fields', description: 'A vector field for generative arts.', to: '/cg/flow-field', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/VectorField.svg/1280px-VectorField.svg.png', tags: ["planned", "shader"] },
   { title: 'Voronoi', description: 'Voronoi texture generation.', to: '/cg/voronoi', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/1280px-Euclidean_Voronoi_diagram.svg.png', tags: ["planned", "shader"] },
+  { title: 'Skybox', description: 'A simple skybox environment texture animated with a flowmap..', to: '/cg/skybox', img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg', tags: ["planned", "shader"] },
 ];
 
 const common = {
