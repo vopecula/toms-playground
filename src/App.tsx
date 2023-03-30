@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CardActionArea, Chip, IconButton } from '@mui/material';
+import { CardActionArea, Chip, IconButton, ThemeOptions } from '@mui/material';
 import { useState } from 'react';
 
 function Copyright() {
@@ -42,10 +42,17 @@ const topics = [
   { title: 'Skybox', description: 'A simple skybox environment texture animated with a flowmap..', to: '/cg/skybox', img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg', tags: ["planned", "shader"] },
 ];
 
-const common = {
+const common: ThemeOptions = {
+  typography: {
+    fontFamily: 'TF2Build',
+    body1: {
+      fontFamily: 'Verdana',
+      fontWeight: 700
+    }
+  },
   palette: {
     primary: {
-      main: '#009bd7'
+      main: 'rgb(220,100,81)'
     }
   },
   components: {
@@ -62,6 +69,16 @@ const common = {
 const dark = createTheme(deepmerge(common, {
   palette: {
     mode: 'dark',
+  },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: 'linear-gradient(rgb(56,51,45), rgb(35,32,27))',
+          borderTop: '1px solid rgb(89,81,72)'
+        }
+      }
+    }
   }
 }));
 const light = createTheme(common);
@@ -74,7 +91,7 @@ export function App() {
     <ThemeProvider theme={darkMode ? dark : light}>
       <CssBaseline />
       <Container sx={{ mt: 2 }} maxWidth="md">
-        <AppBar position="relative">
+        <AppBar variant='outlined' position="relative" color='transparent'>
           <Toolbar>
             <IconButton
               size="large"
@@ -85,21 +102,20 @@ export function App() {
             >
               <MenuIcon />
             </IconButton>
-            <AlbumIcon sx={{ mr: 2 }} />
             <Typography variant="h6" color="inherit" sx={{ flexGrow: 1 }} noWrap>
               Tom's Playground
             </Typography>
             <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={() => setDarkMode(!darkMode)}
-                color="inherit"
-              >
-                {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={() => setDarkMode(!darkMode)}
+              color="inherit"
+            >
+              {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
           </Toolbar>
         </AppBar>
       </Container>
@@ -131,14 +147,14 @@ export function App() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
+              <Button size="large" variant="contained">Main call to action</Button>
+              <Button size="large" variant="outlined">Secondary action</Button>
             </Stack>
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
-          <Grid container spacing={4}>
+          <Grid container spacing={3}>
             {topics.map((topic) => (
               <Grid item key={topic.to} xs={12} sm={6} md={4}>
                 <Card sx={{ height: '100%' }}                >
@@ -151,7 +167,7 @@ export function App() {
                       image={topic.img}
                       alt="random"
                     />
-                    <CardContent sx={{ flexGrow: 1 }}>
+                    <CardContent sx={{ flexGrow: 1, width: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {topic.title}
                       </Typography>
