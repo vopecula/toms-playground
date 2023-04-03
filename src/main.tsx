@@ -14,7 +14,7 @@ const HOC = () => {
       path: "/",
       element: <App />,
       children: [
-        { index: true, path: "cg", element: <Cg /> },
+        { index: true, element: <Cg /> },
         { path: "cg/preview/solar-system", element: <ThreeRenderer setup={SolarSystem} /> },
         { path: "cg/preview/planet", element: <ThreeRenderer setup={Planet} /> },
       ],
