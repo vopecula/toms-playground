@@ -36,7 +36,8 @@ export default function Planet(el) {
   const clock = new THREE.Clock()
 
   const controls = new OrbitControls(camera, renderer.domElement);
-  //controls.autoRotate = true
+  controls.autoRotate = true
+  controls.autoRotateSpeed = .4
 
   // Light
   const pointLight = new THREE.PointLight(0xffffff);
@@ -63,9 +64,9 @@ export default function Planet(el) {
   scene.add(planetMesh)
 
   // Stars
-  const blueStars = makeStars(200, 150, '#4444bb')
-  const redStars = makeStars(245, 150, '#aa4444')
-  const whiteStars = makeStars(150, 300, '#777')
+  const blueStars = makeStars(300, 150, '#4444bb')
+  const redStars = makeStars(345, 150, '#aa4444')
+  const whiteStars = makeStars(250, 300, '#777')
   scene.add(blueStars)
   scene.add(redStars)
   scene.add(whiteStars)
@@ -83,7 +84,7 @@ export default function Planet(el) {
     uniforms.u_light_pos = new THREE.Uniform(new THREE.Vector3(Math.sin(i) * 10, 1, Math.cos(i) * 10))
     controls.update()
     renderer.render(scene, camera);
-    i -= .01
+    i -= .005
   }
   animate();
 }

@@ -10,13 +10,14 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { dark, light } from './theme';
 
 export function App() {
   // const isSystemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   const isSystemDarkMode = true
   const [darkMode, setDarkMode] = useState(isSystemDarkMode)
+  const navigate = useNavigate()
 
   return (
     <ThemeProvider theme={darkMode ? dark : light}>
@@ -26,7 +27,7 @@ export function App() {
         bottom: 0,
         right: 0,
         left: 0,
-        background: darkMode ? 'radial-gradient(transparent 0%, rgb(0,0,0,.9) 130%)' : 'radial-gradient(rgb(0,0,0,.1), rgb(0,0,0,.3))',
+        background: darkMode ? 'radial-gradient(transparent 0%, rgb(0,0,0,.9) 100%)' : 'radial-gradient(rgb(0,0,0,.1), rgb(0,0,0,.3))',
         zIndex: -1
       }} />
       <CssBaseline />
@@ -39,6 +40,7 @@ export function App() {
                 color="inherit"
                 aria-label="menu"
                 sx={{ mr: 2 }}
+                onClick={() => navigate("/")}
               >
                 <MenuIcon />
               </IconButton>
