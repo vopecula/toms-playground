@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { CardActionArea, Chip, Link } from '@mui/material';
+import { CardActionArea, Chip, Divider, Link } from '@mui/material';
 import { useState } from 'react';
 
 const topics = [
@@ -17,6 +17,7 @@ const topics = [
   { title: 'Flow fields', description: 'A vector field for generative arts.', to: '/cg/flow-field', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/VectorField.svg/1280px-VectorField.svg.png', tags: ["planned", "shader"] },
   { title: 'Voronoi', description: 'Voronoi texture generation.', to: '/cg/voronoi', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/1280px-Euclidean_Voronoi_diagram.svg.png', tags: ["planned", "shader"] },
   { title: 'Skybox', description: 'A simple skybox environment texture animated with a flowmap..', to: '/cg/skybox', img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg', tags: ["planned", "shader"] },
+  { title: 'Spotlight', description: 'Fake volumetric spotlights', to: '/cg/skybox', img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg', tags: ["planned", "shader"], links: [{ name: "Codesandbox topic", href: "https://codesandbox.io/s/tx1pq?file=/src/App.js:1493-1510" }, { name: "'Good Enough' Volumetrics for Spotlights", href: "http://john-chapman-graphics.blogspot.com/2013/01/good-enough-volumetrics-for-spotlights.html" }] },
 ];
 
 function Copyright() {
@@ -93,6 +94,8 @@ export function Cg() {
                       {topic.description}
                     </Typography>
                     {topic.tags.map(tag => <Chip key={tag} size="small" sx={{ mr: 1, mt: 1 }} label={tag} />)}
+                    {topic.links && <Divider sx={{ my: 1   }} />}
+                    {topic.links?.map(link => <Typography sx={{ mt: .5, overflow: 'hidden', fontSize: '.7rem', whiteSpace: 'nowrap', width: 1, textOverflow: 'ellipsis' }}><Link target="_blank" href={link.href}>{link.name}</Link></Typography>)}
                   </CardContent>
                 </CardActionArea>
               </Card>
@@ -101,21 +104,21 @@ export function Cg() {
         </Grid>
       </Container>
 
-       {/* Footer */}
-       <Box sx={{ p: 6 }} component="footer">
-          <Typography variant="h6" align="center" gutterBottom>
-            End of the line
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          >
-            Yup, it is the bottom of the page, nothing to see here.
-          </Typography>
-          <Copyright />
-        </Box>
+      {/* Footer */}
+      <Box sx={{ p: 6 }} component="footer">
+        <Typography variant="h6" align="center" gutterBottom>
+          End of the line
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Yup, it is the bottom of the page, nothing to see here.
+        </Typography>
+        <Copyright />
+      </Box>
       {/* End footer */}
     </main>
   );
