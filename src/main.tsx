@@ -7,6 +7,7 @@ import Cg from './components/Cg';
 import ThreeRenderer from './components/ThreeRenderer';
 import SolarSystem from "./three/SolarSystem.three";
 import Planet from './three/Planet.three';
+import VolumetricSpotlight from './three/VolumetricSpotlight.three';
 
 const HOC = () => {
   const router = createBrowserRouter([
@@ -17,6 +18,7 @@ const HOC = () => {
         { index: true, path: "cg", element: <Cg /> },
         { path: "cg/preview/solar-system", element: <ThreeRenderer setup={SolarSystem} /> },
         { path: "cg/preview/planet", element: <ThreeRenderer setup={Planet} /> },
+        { path: "cg/preview/fake-volumetric-spotlight", element: <ThreeRenderer setup={VolumetricSpotlight} /> },
       ],
     },
   ]);

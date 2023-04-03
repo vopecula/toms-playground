@@ -26,7 +26,7 @@ export function App() {
         bottom: 0,
         right: 0,
         left: 0,
-        background: darkMode ? 'radial-gradient(rgb(0,0,0,.7), rgb(0,0,0,.9))' : 'radial-gradient(rgb(0,0,0,.1), rgb(0,0,0,.3))',
+        background: darkMode ? 'radial-gradient(transparent 0%, rgb(0,0,0,.9) 130%)' : 'radial-gradient(rgb(0,0,0,.1), rgb(0,0,0,.3))',
         zIndex: -1
       }} />
       <CssBaseline />
