@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import metrics from './data/metrics.js'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
 const normalizePlanetSize = (value) => {
   const smallest = 2440, biggest = 69911 - 2440;
@@ -18,7 +21,12 @@ export default function SolarSystem(el) {
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ReinhardToneMapping
+  renderer.toneMappingExposure = 1
   el.appendChild(renderer.domElement);
+
+  // Post processing settings
+  const composer = new EffectComposer(renderer);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.autoRotate = true
@@ -48,7 +56,7 @@ export default function SolarSystem(el) {
 
   starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
   starsGeometry2.setAttribute('position', new THREE.Float32BufferAttribute(vertices2, 3))
-  const starMaterial = new THREE.PointsMaterial({ color: '#cccccc' })
+  const starMaterial = new THREE.PointsMaterial({ color: '#efefef' })
   const starMaterial2 = new THREE.PointsMaterial({ color: '#666666' })
   const starsMesh = new THREE.Points(starsGeometry, starMaterial)
   const starsMesh2 = new THREE.Points(starsGeometry2, starMaterial2)
@@ -56,13 +64,13 @@ export default function SolarSystem(el) {
   scene.add(starsMesh2)
 
   // Add sun
-  const geometry = new THREE.SphereGeometry(2)
+  const geometry = new THREE.SphereGeometry(5, 32, 32)
   const material = new THREE.MeshBasicMaterial({ color: '#ffffff' });
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
   // Add light
-  const light = new THREE.PointLight(0xffffff);
+  const light = new THREE.PointLight(0xffffff, 1);
   light.position.set(0, 0, 0);
   light.castShadow = true;
   scene.add(light);
@@ -75,7 +83,7 @@ export default function SolarSystem(el) {
   const calc = {}
 
   // Add Planets
-  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x444444 });
+  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x222222 });
   var segmentCount = 128;
   let unitCirclePoints = [];
   for (var i = 0; i <= segmentCount; i++) {
@@ -125,7 +133,7 @@ export default function SolarSystem(el) {
 
     scene.add(planet);
 
-    const radius = (i + 1) * 5
+    const radius = (i + 1) * 12
     calc[planetKey] = {
       angle: Math.random() * (Math.PI * 2),
       radius: radius,
@@ -139,10 +147,21 @@ export default function SolarSystem(el) {
   })
 
   camera.position.z = 5;
-  camera.position.y = 50;
+  camera.position.y = 250;
   controls.update();
 
   const clock = new THREE.Clock()
+
+  const renderPass = new RenderPass(scene, camera);
+  composer.addPass(renderPass);
+
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    .6,
+    .1,
+    .1
+  );
+  composer.addPass(bloomPass);
 
   // Render
   const speedFactor = 1000
@@ -167,7 +186,7 @@ export default function SolarSystem(el) {
       //controls.update();
     })
 
-    renderer.render(scene, camera);
+    composer.render();
   }
   animate();
 }
