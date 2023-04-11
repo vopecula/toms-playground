@@ -10,6 +10,7 @@ import Planet from './three/Planet.three';
 import VolumetricSpotlight from './three/VolumetricSpotlight.three';
 import PostProcessing from './three/PostProcessing.three';
 import BudgetDiff from './components/BudgetDiff';
+import Voronoi from './three/Voronoi.three';
 
 const HOC = () => {
   const router = createBrowserRouter([
@@ -23,6 +24,7 @@ const HOC = () => {
         { path: "cg/preview/planet", element: <ThreeRenderer setup={Planet} /> },
         { path: "cg/preview/fake-volumetric-spotlight", element: <ThreeRenderer setup={VolumetricSpotlight} /> },
         { path: "cg/preview/post-processing", element: <ThreeRenderer setup={PostProcessing} /> },
+        { path: "cg/preview/voronoi", element: <ThreeRenderer setup={Voronoi} /> },
       ],
     },
   ]);
