@@ -12,14 +12,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const topics = [
-  { title: 'Solar System', description: 'A far view from the planets, excluding the near details.', to: '/cg/preview/solar-system', img: 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Solar_system_orrery_inner_planets.gif', tags: [] },
-  { title: 'Planets', description: 'A more detailed view from a single planet, including day/night cycles.', to: '/cg/preview/planet', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Terrestrial_planet_sizes2.jpg/2560px-Terrestrial_planet_sizes2.jpg', tags: [] },
-  { title: 'Atmospheric scattering', description: 'Earth atmosphere scatters the incoming sunlight. ', to: '/cg/atmospheric-scattering', img: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Pinatubo_dust_layer.jpg', tags: ["planned", "complex"] },
-  { title: 'Flow fields', description: 'A vector field for generative arts.', to: '/cg/flow-field', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/VectorField.svg/1280px-VectorField.svg.png', tags: ["planned", "shader"] },
-  { title: 'Voronoi', description: 'Voronoi texture generation.', to: '/cg/preview/voronoi', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/1280px-Euclidean_Voronoi_diagram.svg.png', tags: ["planned", "shader"] },
-  { title: 'Skybox', description: 'A simple skybox environment texture animated with a flowmap..', to: '/cg/skybox', img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg', tags: ["planned", "shader"] },
-  { title: 'Spotlight', description: 'Fake volumetric spotlights', to: '/cg/preview/fake-volumetric-spotlight', img: 'https://t4.ftcdn.net/jpg/04/47/95/13/360_F_447951398_3DBd9HXzvYYdr84j3mIarxRVKKQpZymu.jpg', tags: ["planned", "shader"], links: [{ name: "Codesandbox topic", href: "https://codesandbox.io/s/tx1pq?file=/src/App.js:1493-1510" }, { name: "'Good Enough' Volumetrics for Spotlights", href: "http://john-chapman-graphics.blogspot.com/2013/01/good-enough-volumetrics-for-spotlights.html" }] },
-  { title: 'Post-processing', description: 'What are shader passes? How can I use them?', to: '/cg/preview/post-processing', img: 'https://docs.unity3d.com/Packages/com.unity.postprocessing@3.0/manual/images/PostProcessing-Bloom-0.png', tags: ["shader"] },
+  { title: 'Solar System', description: 'A far view from the planets, excluding the near details.', to: '/cg/preview/solar-system', img: '/img/solar_system.jpeg', tags: [] },
+  { title: 'Planets', description: 'A more detailed view from a single planet, including day/night cycles.', to: '/cg/preview/planet', img: '/img/planets.jpeg', tags: [] },
+  { title: 'Atmospheric scattering', description: 'Earth atmosphere scatters the incoming sunlight. ', to: '/cg/preview/planet', img: '/img/atmosphere.jpeg', tags: ["planned", "complex"] },
+  { title: 'Flow fields', description: 'A vector field for generative arts.', to: '/cg/flow-field', img: '/img/vectorfield.png', tags: ["planned", "shader"] },
+  { title: 'Voronoi', description: 'Voronoi texture generation.', to: '/cg/preview/voronoi', img: '/img/voronoi.png', tags: ["planned", "shader"] },
+  { title: 'Skybox', description: 'A simple skybox environment texture animated with a flowmap..', to: '/cg/skybox', img: '/img/equirectangular.jpeg', tags: ["planned", "shader"] },
+  { title: 'Spotlight', description: 'Fake volumetric spotlights', to: '/cg/preview/fake-volumetric-spotlight', img: '/img/spotlight.jpeg', tags: ["planned", "shader"], links: [{ name: "Codesandbox topic", href: "https://codesandbox.io/s/tx1pq?file=/src/App.js:1493-1510" }, { name: "'Good Enough' Volumetrics for Spotlights", href: "http://john-chapman-graphics.blogspot.com/2013/01/good-enough-volumetrics-for-spotlights.html" }] },
+  { title: 'Post-processing', description: 'What are shader passes? How can I use them?', to: '/cg/preview/post-processing', img: '/img/bloom.png', tags: ["shader"] },
+  { title: 'Budget diff', description: 'Spot unregistered expenses inbetween apps.', to: '/budget', img: '/img/budget.jpeg', tags: ["budget"] },
 ];
 
 function Copyright() {

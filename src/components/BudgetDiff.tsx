@@ -4,18 +4,24 @@ import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Accordion, AccordionDetails, AccordionSummary, CardActions, CardHeader, InputLabel, Link, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { Accordion, AccordionDetails, AccordionSummary, CardActions, CardHeader, Chip, InputLabel, Link, Table, TableBody, TableCell, TableHead, TableRow, TextField, Toolbar } from '@mui/material';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExpandMore } from '@mui/icons-material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 
 const columns: GridColDef[] = [
-  { headerName: 'Date', field: 'date', flex: 1 },
+  { headerName: 'Date', field: 'date', type: 'date', width: 150 },
   { headerName: 'Title', field: 'title', flex: 1 },
-  { headerName: 'From', field: 'from', flex: 1 },
+  { headerName: 'From', field: 'from', width: 150 },
+  { headerName: 'Status', field: 'status', width: 150, renderCell: (params) => params.value === STATUS.BOOKED ? <Chip color="success" size='small' label="Booked" /> : <Chip color="warning" size='small' label="Missing" /> },
   { headerName: 'Expense', field: 'expense', type: 'number', width: 150, }
 ];
+
+enum STATUS {
+  BOOKED = "booked",
+  MISSING = "missing",
+}
 
 export function BudgetDiff() {
   let navigate = useNavigate()
@@ -24,6 +30,7 @@ export function BudgetDiff() {
   const [bank, setBank] = useState(null)
   const [budget, setBudget] = useState(null)
   const [unpaired, setUnpaired] = useState([])
+  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
 
   const handleFileRead = (event: ChangeEvent<HTMLInputElement>, source: 'bank' | 'budget') => {
     const fileReader = new FileReader();
@@ -53,6 +60,7 @@ export function BudgetDiff() {
           date: new Date(row[0]),
           title: [row[1], row[2]].join(" "),
           from: row[4],
+          status: STATUS.BOOKED,
           expense: Number(row[3].replaceAll("\"", "").trim())
         })
       })
@@ -74,6 +82,7 @@ export function BudgetDiff() {
           date: new Date(row[4]),
           title: row[3],
           from: "Takarek",
+          status: STATUS.BOOKED,
           expense: Number(value.replaceAll("\"", "").replaceAll("-", "").replaceAll(" ", "").trim())
         })
       })
@@ -84,17 +93,28 @@ export function BudgetDiff() {
   const process = () => {
     convertBankCSV()
     convertBudgetCSV()
-
-    const pairless = processedBank.filter(bankItem => {
-      const hit = processedBudget.find(budgetItem => {
-        return budgetItem.expense === bankItem.expense
-      })
-      return !hit
-    })
-    console.log(pairless);
-    
-    setUnpaired(pairless);
   }
+
+  useEffect(() => {
+    if (processedBank.length && processedBudget.length) {
+      const pairless = processedBank.filter(bankItem => {
+        const hit = processedBudget.find(budgetItem => {
+          return budgetItem.expense === bankItem.expense
+        })
+        return !hit
+      })
+      console.log(pairless);
+
+      setUnpaired(pairless.map(x => ({ ...x, status: STATUS.MISSING })));
+    }
+  }, [processedBank, processedBudget])
+
+  const handleToggleStatus = (status: STATUS) =>
+    rowSelectionModel.forEach(id => {
+      const item = unpaired.find(x => x.id === id)
+      if (item)
+        item.status = status
+    })
 
   return (
     <Container sx={{ my: 6 }}>
@@ -105,12 +125,11 @@ export function BudgetDiff() {
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <InputLabel>From Bank (.csv)</InputLabel>
-              <TextField hiddenLabel type='file' onChange={e => handleFileRead(e, 'bank')} helperText="See link below to convert from HTML" />
-              <Link href='https://www.convertcsv.com/html-table-to-csv.htm' target='_blank'>Convert HTML to csv</Link>
+              <TextField fullWidth hiddenLabel type='file' onChange={e => handleFileRead(e, 'bank')} helperText={<>Click <Link href='https://www.convertcsv.com/html-table-to-csv.htm' target='_blank'>here</Link> to convert HTML to CSV</>} />
             </Grid>
             <Grid item xs={12} md={6}>
               <InputLabel>From Budget (.csv)</InputLabel>
-              <TextField hiddenLabel type='file' onChange={e => handleFileRead(e, 'budget')} />
+              <TextField fullWidth hiddenLabel type='file' onChange={e => handleFileRead(e, 'budget')} />
             </Grid>
             <Grid item xs={12} md={6}></Grid>
           </Grid>
@@ -129,12 +148,9 @@ export function BudgetDiff() {
             </AccordionSummary>
             <AccordionDetails>
               <DataGrid
-                sx={{height: 500}}
+                sx={{ height: 500 }}
                 rows={processedBank}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
               />
             </AccordionDetails>
           </Accordion>
@@ -145,28 +161,31 @@ export function BudgetDiff() {
             </AccordionSummary>
             <AccordionDetails>
               <DataGrid
-                sx={{height: 500}}
+                sx={{ height: 500 }}
                 rows={processedBudget}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
               />
             </AccordionDetails>
           </Accordion>
 
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMore />}>
-              <Typography>Items wo match ({unpaired.length} items) - Total: {unpaired.reduce((a, c) => a + c.expense, 0)}</Typography>
+              <Typography>Items wo match (count: {unpaired.length}, total expenses: {unpaired.filter(x => x.status === STATUS.MISSING).reduce((a, c) => a + c.expense, 0)})</Typography>
             </AccordionSummary>
             <AccordionDetails>
+              <Toolbar disableGutters>
+                <Button sx={{ mr: 1 }} onClick={() => handleToggleStatus(STATUS.BOOKED)}>Booked</Button>
+                <Button sx={{ mr: 1 }} onClick={() => handleToggleStatus(STATUS.MISSING)}>Missing</Button>
+              </Toolbar>
               <DataGrid
-                sx={{height: 500}}
+                sx={{ height: 500 }}
                 rows={unpaired}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
                 checkboxSelection
+                onRowSelectionModelChange={(newRowSelectionModel) => {
+                  setRowSelectionModel(newRowSelectionModel);
+                }}
+                rowSelectionModel={rowSelectionModel}
               />
             </AccordionDetails>
           </Accordion>
