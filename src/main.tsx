@@ -9,6 +9,7 @@ import SolarSystem from "./three/SolarSystem.three";
 import Planet from './three/Planet.three';
 import VolumetricSpotlight from './three/VolumetricSpotlight.three';
 import PostProcessing from './three/PostProcessing.three';
+import BudgetDiff from './components/BudgetDiff';
 
 const HOC = () => {
   const router = createBrowserRouter([
@@ -17,6 +18,7 @@ const HOC = () => {
       element: <App />,
       children: [
         { index: true, element: <Cg /> },
+        { path: "budget", element: <BudgetDiff/> },
         { path: "cg/preview/solar-system", element: <ThreeRenderer setup={SolarSystem} /> },
         { path: "cg/preview/planet", element: <ThreeRenderer setup={Planet} /> },
         { path: "cg/preview/fake-volumetric-spotlight", element: <ThreeRenderer setup={VolumetricSpotlight} /> },

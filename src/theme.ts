@@ -4,11 +4,17 @@ import { ThemeOptions } from '@mui/material';
 
 const common: ThemeOptions = {
   typography: {
-    fontFamily: 'TF2Build',
+    fontFamily: 'Verdana',
     body1: {
       fontFamily: 'Verdana',
-      fontWeight: 700
-    }
+      fontWeight: 700,
+    },
+    h1: {fontFamily: 'TF2Build'},
+    h2: {fontFamily: 'TF2Build'},
+    h3: {fontFamily: 'TF2Build'},
+    h4: {fontFamily: 'TF2Build'},
+    h5: {fontFamily: 'TF2Build'},
+    h6: {fontFamily: 'TF2Build'},
   },
   palette: {
     primary: {
