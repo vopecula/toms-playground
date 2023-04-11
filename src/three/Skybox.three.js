@@ -8,8 +8,8 @@ export default function Skybox(el) {
 
   // Setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 2000);
-  camera.position.z = 2
+  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+  camera.position.z = 5
   camera.position.y = 1
   camera.position.x = -3
 
