@@ -17,7 +17,7 @@ const topics = [
   { title: 'Atmospheric scattering', description: 'Earth atmosphere scatters the incoming sunlight. ', to: '/cg/preview/planet', img: '/img/atmosphere.jpeg', tags: ["planned", "complex"] },
   { title: 'Flow fields', description: 'A vector field for generative arts.', to: '/cg/flow-field', img: '/img/vectorfield.png', tags: ["planned", "shader"] },
   { title: 'Voronoi', description: 'Voronoi texture generation.', to: '/cg/preview/voronoi', img: '/img/voronoi.png', tags: ["planned", "shader"] },
-  { title: 'Skybox', description: 'A simple skybox environment texture animated with a flowmap..', to: '/cg/skybox', img: '/img/equirectangular.jpeg', tags: ["planned", "shader"] },
+  { title: 'Skybox', description: 'A simple skybox environment texture animated with a flowmap..', to: '/cg/preview/skybox', img: '/img/equirectangular.jpeg', tags: ["shader"] },
   { title: 'Spotlight', description: 'Fake volumetric spotlights', to: '/cg/preview/fake-volumetric-spotlight', img: '/img/spotlight.jpeg', tags: ["planned", "shader"], links: [{ name: "Codesandbox topic", href: "https://codesandbox.io/s/tx1pq?file=/src/App.js:1493-1510" }, { name: "'Good Enough' Volumetrics for Spotlights", href: "http://john-chapman-graphics.blogspot.com/2013/01/good-enough-volumetrics-for-spotlights.html" }] },
   { title: 'Post-processing', description: 'What are shader passes? How can I use them?', to: '/cg/preview/post-processing', img: '/img/bloom.png', tags: ["shader"] },
   { title: 'Budget diff', description: 'Spot unregistered expenses inbetween apps.', to: '/budget', img: '/img/budget.jpeg', tags: ["budget"] },

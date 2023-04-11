@@ -46,7 +46,7 @@ export const dark = createTheme(deepmerge(common, {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          background: "url(/6n5cM14.png)"
+          background: "url(/img/6n5cM14.png)"
         }
       }
     },
@@ -66,7 +66,7 @@ export const light = createTheme(deepmerge(common, {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          background: "url(/NgiJMQy.png)"
+          background: "url(/img/NgiJMQy.png)"
         }
       }
     },

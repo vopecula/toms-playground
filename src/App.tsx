@@ -32,7 +32,7 @@ export function App() {
       }} />
       <CssBaseline />
         <Container sx={{ mt: 2 }} maxWidth="md">
-          <AppBar position="relative" sx={{ background: 'url(/SMqDLUk.png)' }}>
+          <AppBar position="relative" sx={{ background: 'url(/img/SMqDLUk.png)' }}>
             <Toolbar>
               <IconButton
                 size="large"
