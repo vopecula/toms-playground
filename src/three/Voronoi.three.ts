@@ -1,6 +1,5 @@
 // @ts-nocheck
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { plainText as fragmentShader } from './shaders/voronoi.frag.glsl'
 import { plainText as vertexShader } from './shaders/voronoi.vert.glsl'
 

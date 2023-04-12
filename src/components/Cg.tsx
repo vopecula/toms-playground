@@ -75,7 +75,7 @@ export function Cg() {
           </Stack>
         </Container>
       </Box>
-      <Container sx={{ py: 8 }} maxWidth="md">
+      <Container sx={{ pb: 8, mt: 3 }} maxWidth="md">
         {/* End hero unit */}
         <Grid container spacing={3}>
           {topics.map((topic) => (
