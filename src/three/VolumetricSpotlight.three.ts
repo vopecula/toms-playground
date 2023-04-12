@@ -2,8 +2,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { VertexNormalsHelper } from 'three/addons/helpers/VertexNormalsHelper.js';
-import { plainText as VolumetricLightFragmentShader } from './shaders/volumetricLight.frag'
-import { plainText as VolumetricLightVertexShader } from './shaders/volumetricLight.vert'
+import { plainText as VolumetricLightFragmentShader } from './shaders/volumetricLight.frag.glsl'
+import { plainText as VolumetricLightVertexShader } from './shaders/volumetricLight.vert.glsl'
 
 export default function VolumetricSportlight(el) {
 

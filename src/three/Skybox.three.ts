@@ -2,8 +2,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EXRLoader } from 'three/addons/loaders/EXRLoader.js';
-import { plainText as fragmentShader } from './shaders/voronoi.frag'
-import { plainText as vertexShader } from './shaders/voronoi.vert'
 
 export default function Skybox(el) {
 

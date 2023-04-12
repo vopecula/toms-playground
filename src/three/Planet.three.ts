@@ -1,8 +1,8 @@
 // @ts-nocheck
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { plainText as PlanetFragmentShader } from './shaders/planet.frag'
-import { plainText as PlanetVertexShader } from './shaders/planet.vert'
+import { plainText as PlanetFragmentShader } from './shaders/planet.frag.glsl'
+import { plainText as PlanetVertexShader } from './shaders/planet.vert.glsl'
 
 export default function Planet(el) {
 
