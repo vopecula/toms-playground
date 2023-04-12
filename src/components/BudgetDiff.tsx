@@ -4,9 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Accordion, AccordionDetails, AccordionSummary, CardActions, CardHeader, Chip, InputLabel, Link, Table, TableBody, TableCell, TableHead, TableRow, TextField, Toolbar } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, CardActions, CardHeader, Chip, InputLabel, Link, TextField, Toolbar } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ExpandMore } from '@mui/icons-material';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 
@@ -23,13 +22,21 @@ enum STATUS {
   MISSING = "missing",
 }
 
+type Entry = {
+  id: number,
+  date: Date,
+  title: string,
+  from: string,
+  status: STATUS,
+  expense: number
+}
+
 export function BudgetDiff() {
-  let navigate = useNavigate()
-  const [processedBank, setProcessedBank] = useState([])
-  const [processedBudget, setProcessedBudget] = useState([])
-  const [bank, setBank] = useState(null)
-  const [budget, setBudget] = useState(null)
-  const [unpaired, setUnpaired] = useState([])
+  const [processedBank, setProcessedBank] = useState<Entry[]>([])
+  const [processedBudget, setProcessedBudget] = useState<Entry[]>([])
+  const [bank, setBank] = useState("")
+  const [budget, setBudget] = useState("")
+  const [unpaired, setUnpaired] = useState<Entry[]>([])
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
 
   const handleFileRead = (event: ChangeEvent<HTMLInputElement>, source: 'bank' | 'budget') => {
@@ -39,11 +46,12 @@ export function BudgetDiff() {
     if (target.files !== null) {
       fileReader.readAsText(target.files[0]);
       fileReader.onload = (e) => {
-        if (source === 'bank')
-          setBank(e.target.result)
-        else
-          setBudget(e.target.result)
-        console.log(e.target.result);
+        if (e.target) {
+          if (source === 'bank')
+            setBank(e.target.result as string)
+          else
+            setBudget(e.target.result as string)
+        }
       };
     }
   }
@@ -64,12 +72,10 @@ export function BudgetDiff() {
           expense: Number(row[3].replaceAll("\"", "").trim())
         })
       })
-    console.log(rows);
     setProcessedBudget(rows)
   }
 
   const convertBankCSV = () => {
-
     const rows = bank
       .split("\n")
       .slice(1)
@@ -86,7 +92,6 @@ export function BudgetDiff() {
           expense: Number(value.replaceAll("\"", "").replaceAll("-", "").replaceAll(" ", "").trim())
         })
       })
-    console.log(rows);
     setProcessedBank(rows)
   }
 
@@ -103,8 +108,6 @@ export function BudgetDiff() {
         })
         return !hit
       })
-      console.log(pairless);
-
       setUnpaired(pairless.map(x => ({ ...x, status: STATUS.MISSING })));
     }
   }, [processedBank, processedBudget])
@@ -125,17 +128,28 @@ export function BudgetDiff() {
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <InputLabel>From Bank (.csv)</InputLabel>
-              <TextField fullWidth hiddenLabel type='file' onChange={e => handleFileRead(e, 'bank')} helperText={<>Click <Link href='https://www.convertcsv.com/html-table-to-csv.htm' target='_blank'>here</Link> to convert HTML to CSV</>} />
+              <TextField
+                fullWidth
+                hiddenLabel
+                type='file'
+                onChange={e => handleFileRead(e as ChangeEvent<HTMLInputElement>, 'bank')}
+                helperText={<>Click <Link href='https://www.convertcsv.com/html-table-to-csv.htm' target='_blank'>here</Link> to convert HTML to CSV</>}
+              />
             </Grid>
             <Grid item xs={12} md={6}>
               <InputLabel>From Budget (.csv)</InputLabel>
-              <TextField fullWidth hiddenLabel type='file' onChange={e => handleFileRead(e, 'budget')} />
+              <TextField
+                fullWidth
+                hiddenLabel
+                type='file'
+                onChange={e => handleFileRead(e as ChangeEvent<HTMLInputElement>, 'budget')}
+              />
             </Grid>
             <Grid item xs={12} md={6}></Grid>
           </Grid>
         </CardContent>
-        <CardActions>
-          <Button onClick={process}>Show Diff</Button>
+        <CardActions sx={{ textAlign: 'right' }}>
+          <Button variant='contained' onClick={process}>Show Diff</Button>
         </CardActions>
       </Card>
 
