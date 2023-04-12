@@ -12,6 +12,7 @@ import PostProcessing from './three/PostProcessing.three';
 import BudgetDiff from './components/BudgetDiff';
 import Voronoi from './three/Voronoi.three';
 import Skybox from './three/Skybox.three';
+import Depth from './three/Depth.three';
 
 const HOC = () => {
   const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const HOC = () => {
         { path: "cg/preview/post-processing", element: <ThreeRenderer setup={PostProcessing} /> },
         { path: "cg/preview/voronoi", element: <ThreeRenderer setup={Voronoi} /> },
         { path: "cg/preview/skybox", element: <ThreeRenderer setup={Skybox} /> },
+        { path: "cg/preview/depth", element: <ThreeRenderer setup={Depth} /> },
       ],
     },
   ]);

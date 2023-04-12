@@ -21,6 +21,7 @@ const topics = [
   { title: 'Spotlight', description: 'Fake volumetric spotlights', to: '/cg/preview/fake-volumetric-spotlight', img: '/img/spotlight.jpeg', tags: ["planned", "shader"], links: [{ name: "Codesandbox topic", href: "https://codesandbox.io/s/tx1pq?file=/src/App.js:1493-1510" }, { name: "'Good Enough' Volumetrics for Spotlights", href: "http://john-chapman-graphics.blogspot.com/2013/01/good-enough-volumetrics-for-spotlights.html" }] },
   { title: 'Post-processing', description: 'What are shader passes? How can I use them?', to: '/cg/preview/post-processing', img: '/img/bloom.png', tags: ["shader"] },
   { title: 'Budget diff', description: 'Spot unregistered expenses inbetween apps.', to: '/budget', img: '/img/budget.jpeg', tags: ["budget"] },
+  { title: 'Depth buffer', description: 'Visualizing the depth buffer.', to: '/cg/preview/depth', img: 'https://picsum.photos/id/24/200/200', tags: [] },
 ];
 
 function Copyright() {
