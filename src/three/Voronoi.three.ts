@@ -25,7 +25,7 @@ export default function Voronoi(el) {
   }
 
   // Plane
-  const planeGeometry = new THREE.BoxGeometry(2, 2)
+  const planeGeometry = new THREE.BoxGeometry(2, 2) // 2x2 Clipping area coordinates centered at origin
   //const planeMaterial = new THREE.MeshBasicMaterial({color: '#ffffff', side: THREE.DoubleSide})
   const planeMaterial = new THREE.ShaderMaterial({
     vertexShader,
