@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const topics = [
+  { title: 'Dynamic Textures', description: 'Make the most, belivable variation ith the fex texture possible.', to: '/topics/dynamic-textures', img: '/img/dynamic-texture.png', tags: ["tiles", "optimization"] },
   { title: 'Solar System', description: 'A far view from the planets, excluding the near details.', to: '/cg/preview/solar-system', img: '/img/solar_system.jpeg', tags: [] },
   { title: 'Planets', description: 'A more detailed view from a single planet, including day/night cycles.', to: '/cg/preview/planet', img: '/img/planets.jpeg', tags: [] },
   { title: 'Atmospheric scattering', description: 'Earth atmosphere scatters the incoming sunlight. ', to: '/cg/preview/planet', img: '/img/atmosphere.jpeg', tags: ["planned", "complex"] },

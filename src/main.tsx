@@ -14,6 +14,7 @@ import Voronoi from './three/Voronoi.three';
 import Skybox from './three/Skybox.three';
 import Depth from './three/Depth.three';
 import RayMarching from './three/RayMarching.three';
+import DynamicTextureTopic from './topics/DynamicTexture';
 
 const HOC = () => {
   const router = createBrowserRouter([
@@ -31,6 +32,7 @@ const HOC = () => {
         { path: "cg/preview/skybox", element: <ThreeRenderer setup={Skybox} /> },
         { path: "cg/preview/depth", element: <ThreeRenderer setup={Depth} /> },
         { path: "cg/preview/ray-marching", element: <ThreeRenderer setup={RayMarching} /> },
+        { path: "topics/dynamic-textures", element: <DynamicTextureTopic /> },
       ],
     },
   ]);
