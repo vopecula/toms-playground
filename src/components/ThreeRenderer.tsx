@@ -50,7 +50,7 @@ const ThreeRenderer: React.FC<ThreeJsCode> = (props) => {
         bottom: 0,
         height: fs ? 'auto' : 400,
         bgcolor: 'common.black',
-        borderRadius: 4,
+        borderRadius: fs ? 0 : 4,
         overflow: 'hidden',
         my: fs ? 0 : 3
       }}
