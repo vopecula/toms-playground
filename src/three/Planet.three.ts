@@ -24,13 +24,15 @@ export default function Planet(el) {
     return stars
   }
 
-  // Setup
+  let isPlaying = true
+
+// Setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+  const camera = new THREE.PerspectiveCamera(70, el.offsetWidth / el.offsetHeight, 0.1, 2000);
   camera.position.x = 3
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(el.offsetWidth, el.offsetHeight);
   renderer.setPixelRatio(window.devicePixelRatio)
   el.appendChild(renderer.domElement);
 
@@ -87,5 +89,14 @@ export default function Planet(el) {
     renderer.render(scene, camera);
     i -= .005
   }
-  animate();
+   return {
+    animate,
+    pause: () => { isPlaying = false },
+    play: () => { isPlaying = true; animate() },
+    onCanvasResize: () => {
+      camera.aspect = el.offsetWidth / el.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(el.offsetWidth, el.offsetHeight);
+    }
+}
 }

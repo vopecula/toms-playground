@@ -4,14 +4,16 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export default function Depth(el) {
 
-  // Setup
+  let isPlaying = true
+
+// Setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 20);
+  const camera = new THREE.PerspectiveCamera(50, el.offsetWidth / el.offsetHeight, 0.1, 20);
   camera.position.z = 3
   camera.position.y = .05
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(el.offsetWidth, el.offsetHeight);
   renderer.setPixelRatio(window.devicePixelRatio)
   el.appendChild(renderer.domElement);
 
@@ -25,7 +27,7 @@ export default function Depth(el) {
   }
 
   // Mesh
-  const geometry = new THREE.PlaneGeometry(10,10)
+  const geometry = new THREE.PlaneGeometry(10, 10)
   const material = new THREE.ShaderMaterial({
     fragmentShader: `
 void main(){
@@ -47,5 +49,14 @@ void main(){
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }
-  animate();
+  return {
+    animate,
+    pause: () => { isPlaying = false },
+    play: () => { isPlaying = true; animate() },
+    onCanvasResize: () => {
+      camera.aspect = el.offsetWidth / el.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(el.offsetWidth, el.offsetHeight);
+    }
+  }
 }

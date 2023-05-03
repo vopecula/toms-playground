@@ -7,7 +7,6 @@ const common: ThemeOptions = {
     fontFamily: 'Verdana',
     body1: {
       fontFamily: 'Verdana',
-      fontWeight: 700,
     },
     h1: {fontFamily: 'TF2Build'},
     h2: {fontFamily: 'TF2Build'},

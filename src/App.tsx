@@ -15,7 +15,7 @@ import { dark, light } from './theme';
 
 export function App() {
   // const isSystemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-  const isSystemDarkMode = true
+  const isSystemDarkMode = false
   const [darkMode, setDarkMode] = useState(isSystemDarkMode)
   const navigate = useNavigate()
 
@@ -31,38 +31,34 @@ export function App() {
         zIndex: -1
       }} />
       <CssBaseline />
-        <Container sx={{ mt: 2 }} maxWidth="md">
-          <AppBar position="relative" sx={{ background: 'url(/img/SMqDLUk.png)' }}>
-            <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-                onClick={() => navigate("/")}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h5" color="inherit" sx={{ flexGrow: 1 }} noWrap>
-                Tommy's Playground
-              </Typography>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={() => setDarkMode(!darkMode)}
-                color="inherit"
-              >
-                {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-        </Container>
+      <Container sx={{ mt: 2 }} maxWidth="md">
+        <AppBar position="relative" sx={{ zIndex: 1, background: 'url(/img/SMqDLUk.png)' }}>
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+              onClick={() => navigate("/")}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h5" color="inherit" sx={{ flexGrow: 1 }} noWrap>
+              Tommy's Playground
+            </Typography>
+            <IconButton
+              size="large"
+              edge="end"
+              onClick={() => setDarkMode(!darkMode)}
+              color="inherit"
+            >
+              {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      </Container>
 
-        <Outlet />
+      <Outlet />
     </ThemeProvider>
   );
 }

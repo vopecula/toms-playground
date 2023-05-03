@@ -5,14 +5,16 @@ import { plainText as vertexShader } from './shaders/voronoi.vert.glsl'
 
 export default function RayMarching(el) {
 
-  // Setup
+  let isPlaying = true
+
+// Setup
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x343434);
-  const camera = new THREE.OrthographicCamera(window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 10000);
+  const camera = new THREE.OrthographicCamera(el.offsetWidth / - 2, el.offsetWidth / 2, el.offsetHeight / 2, el.offsetHeight / - 2, 1, 10000);
   camera.position.set(0,0,50)
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(el.offsetWidth, el.offsetHeight);
   renderer.setPixelRatio(window.devicePixelRatio)
   el.appendChild(renderer.domElement);
 
@@ -20,7 +22,7 @@ export default function RayMarching(el) {
 
   const uniforms = {
     u_time: new THREE.Uniform(0),
-    u_resolution: new THREE.Uniform(new THREE.Vector2(window.innerWidth, window.innerHeight)),
+    u_resolution: new THREE.Uniform(new THREE.Vector2(el.offsetWidth, el.offsetHeight)),
     u_mouse: new THREE.Uniform(new THREE.Vector2(0, 0)),
   }
 
@@ -37,7 +39,7 @@ export default function RayMarching(el) {
 
   window.onmousemove = function (e) {
     uniforms.u_mouse.value.x = e.clientX
-    uniforms.u_mouse.value.y = window.innerHeight - e.clientY
+    uniforms.u_mouse.value.y = el.offsetHeight - e.clientY
   }
 
   // Render
@@ -48,5 +50,14 @@ export default function RayMarching(el) {
     renderer.render(scene, camera);
     uniforms.u_time.value = delta
   }
-  animate();
+   return {
+    animate,
+    pause: () => { isPlaying = false },
+    play: () => { isPlaying = true; animate() },
+    onCanvasResize: () => {
+      camera.aspect = el.offsetWidth / el.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(el.offsetWidth, el.offsetHeight);
+    }
+}
 }

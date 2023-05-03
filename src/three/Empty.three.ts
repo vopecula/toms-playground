@@ -3,14 +3,15 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export default function Empty(el) {
+  let isPlaying = true
 
-  // Setup
+// Setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
+  const camera = new THREE.PerspectiveCamera(50, el.offsetWidth / el.offsetHeight, 0.1, 2000);
   camera.position.z = 3
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(el.offsetWidth, el.offsetHeight);
   renderer.setPixelRatio(window.devicePixelRatio)
   el.appendChild(renderer.domElement);
 
@@ -35,9 +36,20 @@ export default function Empty(el) {
 
   // Render
   function animate() {
+    if (!isPlaying) return;
     let delta = clock.getDelta()
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }
-  animate();
+
+  return {
+    animate,
+    pause: () => { isPlaying = false },
+    play: () => { isPlaying = true; animate() },
+    onCanvasResize: () => {
+      camera.aspect = el.offsetWidth / el.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(el.offsetWidth, el.offsetHeight);
+    },
+  }
 }

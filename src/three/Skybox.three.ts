@@ -5,15 +5,17 @@ import { EXRLoader } from 'three/addons/loaders/EXRLoader.js';
 
 export default function Skybox(el) {
 
-  // Setup
+  let isPlaying = true
+
+// Setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+  const camera = new THREE.PerspectiveCamera(70, el.offsetWidth / el.offsetHeight, 0.1, 2000);
   camera.position.z = 5
   camera.position.y = 1
   camera.position.x = -3
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(el.offsetWidth, el.offsetHeight);
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.toneMapping = THREE.ReinhardToneMapping
   renderer.toneMappingExposure = 2
@@ -25,7 +27,7 @@ export default function Skybox(el) {
   const clock = new THREE.Clock()
 
   const uniforms = {
-    u_resolution: new THREE.Uniform(new THREE.Vector2(window.innerWidth, window.innerHeight)),
+    u_resolution: new THREE.Uniform(new THREE.Vector2(el.offsetWidth, el.offsetHeight)),
   }
 
   const texture = new EXRLoader().load('/envmaps/partly_cloudy_puresky_2k.exr')
@@ -53,5 +55,14 @@ export default function Skybox(el) {
     renderer.render(scene, camera);
     controls.update()
   }
-  animate();
+   return {
+    animate,
+    pause: () => { isPlaying = false },
+    play: () => { isPlaying = true; animate() },
+    onCanvasResize: () => {
+      camera.aspect = el.offsetWidth / el.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(el.offsetWidth, el.offsetHeight);
+    }
+}
 }

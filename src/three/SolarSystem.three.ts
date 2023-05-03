@@ -12,13 +12,14 @@ const normalizePlanetSize = (value) => {
 }
 
 export default function SolarSystem(el) {
+  let isPlaying = true
 
   // Setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
+  const camera = new THREE.PerspectiveCamera(50, el.offsetWidth / el.offsetHeight, 0.1, 2000);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(el.offsetWidth, el.offsetHeight);
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -117,7 +118,6 @@ export default function SolarSystem(el) {
         ringGeo.attributes.uv.setXY(i, v3.length() < ((planetRadius * 1.5)) ? 0 : 1, 1);
       }
 
-
       const ringMat = new THREE.MeshBasicMaterial({ map: ringText, transparent: true });
       const ring = new THREE.Mesh(ringGeo, ringMat);
       ring.castShadow = true; //default is false
@@ -157,7 +157,7 @@ export default function SolarSystem(el) {
   composer.addPass(renderPass);
 
   const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    new THREE.Vector2(el.offsetWidth, el.offsetHeight),
     .6,
     .1,
     .1
@@ -167,6 +167,7 @@ export default function SolarSystem(el) {
   // Render
   const speedFactor = 1000
   function animate() {
+    if (!isPlaying) return;
     let delta = clock.getDelta()
 
     requestAnimationFrame(animate);
@@ -189,5 +190,16 @@ export default function SolarSystem(el) {
 
     composer.render();
   }
-  animate();
+
+  return {
+    animate,
+    pause: () => { isPlaying = false },
+    play: () => { isPlaying = true; animate() },
+    onCanvasResize: () => {
+      camera.aspect = el.offsetWidth / el.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(el.offsetWidth, el.offsetHeight);
+      composer.setSize(el.offsetWidth, el.offsetHeight);
+    },
+  }
 }

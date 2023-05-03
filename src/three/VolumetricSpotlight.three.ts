@@ -7,14 +7,16 @@ import { plainText as VolumetricLightVertexShader } from './shaders/volumetricLi
 
 export default function VolumetricSportlight(el) {
 
-  // Setup
+  let isPlaying = true
+
+// Setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+  const camera = new THREE.PerspectiveCamera(70, el.offsetWidth / el.offsetHeight, 0.1, 2000);
   camera.position.x = 10
   camera.position.y = 10
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(el.offsetWidth, el.offsetHeight);
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -108,5 +110,14 @@ scene.add( axesHelper );
     controls.update()
     renderer.render(scene, camera);
   }
-  animate();
+   return {
+    animate,
+    pause: () => { isPlaying = false },
+    play: () => { isPlaying = true; animate() },
+    onCanvasResize: () => {
+      camera.aspect = el.offsetWidth / el.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(el.offsetWidth, el.offsetHeight);
+    }
+}
 }
