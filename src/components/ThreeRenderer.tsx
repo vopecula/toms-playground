@@ -1,5 +1,5 @@
 import { Fullscreen, Pause, PlayArrow } from "@mui/icons-material";
-import { Backdrop, Box, Button, Fab, IconButton, Stack, Typography } from "@mui/material";
+import { Backdrop, Box, Fab, Stack } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 
 type ProjectController = {
